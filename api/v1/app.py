@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This module contains the application"""
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from flask import Blueprint
@@ -15,6 +15,12 @@ app.register_app(app_views)
 def close_db(obj):
     """calls methods close"""
     storage.close()
+
+
+@app.errohandler(404)
+def error404(error):
+    """returns a JSON-formatted 404 status code"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
