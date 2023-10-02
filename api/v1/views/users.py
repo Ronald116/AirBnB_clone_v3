@@ -38,13 +38,13 @@ def del_user(user_id):
 @app_views.route('/user', methods=['POST'], strict_slashes=False)
 def post_user():
     """create a new instance"""
-    if not request.json():
+    if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'email' not in request.json():
+    if 'email' not in request.get_json():
         return make_response(jsonify({'error': 'Missing email'}), 400)
-    if 'password' not in request.json():
+    if 'password' not in request.get_json():
         return make_response(jsonify({'error': 'Missing password'}), 400)
-    user = request.json()
+    user = request.get_json()
     user_obj = User(**user)
     user_obj.save()
     return jsonify(user_obj.to_dict()), 201

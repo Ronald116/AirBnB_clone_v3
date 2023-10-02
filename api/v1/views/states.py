@@ -39,7 +39,7 @@ def create():
     """create an instance"""
     if not request.json():
         return make_response(jsonify({'error': "Not a JSON"}), 400)
-    if 'name' not in request.json():
+    if 'name' not in request.get_json():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     cs = request.json()
     obj = State(**cs)
